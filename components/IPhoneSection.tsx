@@ -27,7 +27,7 @@ export default function IPhoneSection() {
   return (
     <section
       ref={ref}
-      className="h-screen flex flex-col items-center justify-center bg-black text-white pt-24"
+      className="h-[120vh] flex flex-col items-center justify-center bg-black text-white pt-24"
     >
       <div
         className={`space-y-0.5 text-center transform transition-all duration-1000 ${
@@ -48,7 +48,7 @@ export default function IPhoneSection() {
         </div>
       </div>
       <div
-        className={`-mt-8 w-full max-w-3xl mx-auto transform transition-all duration-1000 delay-300 ${
+        className={`-mt-4 w-full max-w-3xl mx-auto transform transition-all duration-1000 delay-300 ${
           inView ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
         }`}
       >
