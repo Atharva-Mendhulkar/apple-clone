@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 
-export default function ValentinesSection() {
+const ValentinesSection = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -68,4 +68,6 @@ export default function ValentinesSection() {
       </div>
     </section>
   );
-}
+};
+
+export { ValentinesSection };

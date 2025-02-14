@@ -27,10 +27,10 @@ export default function IPhoneSection() {
   return (
     <section
       ref={ref}
-      className="h-screen flex flex-col items-center justify-center bg-black text-white pt-56"
+      className="h-screen flex flex-col items-center justify-center bg-black text-white pt-24"
     >
       <div
-        className={`space-y-4 text-center transform transition-all duration-1000 ${
+        className={`space-y-0.5 text-center transform transition-all duration-1000 ${
           inView ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
         }`}
       >
@@ -38,7 +38,7 @@ export default function IPhoneSection() {
         <p className="text-xl md:text-2xl">
           Titanium. So strong. So light. So Pro.
         </p>
-        <div className="flex items-center justify-center space-x-4 pt-4">
+        <div className="flex items-center justify-center space-x-4 pt-1">
           <Button variant="link" className="text-blue-500 hover:text-blue-400">
             Learn more &gt;
           </Button>
@@ -48,7 +48,7 @@ export default function IPhoneSection() {
         </div>
       </div>
       <div
-        className={`mt-8 w-full max-w-3xl mx-auto transform transition-all duration-1000 delay-300 ${
+        className={`-mt-8 w-full max-w-3xl mx-auto transform transition-all duration-1000 delay-300 ${
           inView ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
         }`}
       >

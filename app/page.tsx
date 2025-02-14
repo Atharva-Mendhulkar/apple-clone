@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import IPhoneSection from "@/components/IPhoneSection";
 import WatchSection from "@/components/WatchSection";
 import Footer from "@/components/Footer";
-import { ValentineSection } from "@/components/ValentineSection";
+import { ValentinesSection } from "@/components/ValentinesSection";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       <Navbar />
       <IPhoneSection />
       <WatchSection />
-      <ValentineSection />
+      <ValentinesSection />
       <Footer />
     </main>
   );
