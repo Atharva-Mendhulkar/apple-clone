@@ -10,9 +10,9 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full bg-[rgba(255,255,255,0.8)] backdrop-blur-md z-50">
-        <div className="max-w-[980px] mx-auto h-12 flex items-center justify-between px-8 text-sm">
-          <Link href="/" className="text-gray-900 mr-8">
+      <nav className="fixed top-0 w-full bg-[rgba(22,22,23,0.8)] backdrop-blur-md z-50">
+        <div className="max-w-[980px] mx-auto h-11 flex items-center justify-between px-8 text-xs">
+          <Link href="/" className="text-white mr-8">
             <svg
               height="44"
               viewBox="0 0 14 44"
@@ -25,56 +25,56 @@ export default function Navbar() {
               />
             </svg>
           </Link>
-          <div className="hidden md:flex items-center space-x-10">
+          <div className="hidden md:flex items-center space-x-8">
             <div
               className="relative"
               onMouseEnter={() => setShowShopDropdown(true)}
               onMouseLeave={() => setShowShopDropdown(false)}
             >
-              <Link href="/store" className="text-gray-900 hover:text-gray-600">
+              <Link href="/store" className="text-white/90 hover:text-white">
                 Store
               </Link>
               {showShopDropdown && <ShopDropdown />}
             </div>
-            <Link href="/mac" className="text-gray-900 hover:text-gray-600">
+            <Link href="/mac" className="text-white/90 hover:text-white">
               Mac
             </Link>
-            <Link href="/ipad" className="text-gray-900 hover:text-gray-600">
+            <Link href="/ipad" className="text-white/90 hover:text-white">
               iPad
             </Link>
-            <Link href="/iphone" className="text-gray-900 hover:text-gray-600">
+            <Link href="/iphone" className="text-white/90 hover:text-white">
               iPhone
             </Link>
-            <Link href="/watch" className="text-gray-900 hover:text-gray-600">
+            <Link href="/watch" className="text-white/90 hover:text-white">
               Watch
             </Link>
-            <Link href="/vision" className="text-gray-900 hover:text-gray-600">
+            <Link href="/vision" className="text-white/90 hover:text-white">
               Vision
             </Link>
-            <Link href="/airpods" className="text-gray-900 hover:text-gray-600">
+            <Link href="/airpods" className="text-white/90 hover:text-white">
               AirPods
             </Link>
             <Link
               href="/tv"
-              className="text-gray-900 hover:text-gray-600 whitespace-nowrap"
+              className="text-white/90 hover:text-white whitespace-nowrap"
             >
               TV & Home
             </Link>
             <Link
               href="/entertainment"
-              className="text-gray-900 hover:text-gray-600"
+              className="text-white/90 hover:text-white"
             >
               Entertainment
             </Link>
             <Link
               href="/accessories"
-              className="text-gray-900 hover:text-gray-600"
+              className="text-white/90 hover:text-white"
             >
               Accessories
             </Link>
             <Link
               href="/support"
-              className="text-gray-900 hover:text-gray-600 mr-12"
+              className="text-white/90 hover:text-white mr-12"
             >
               Support
             </Link>
@@ -82,22 +82,22 @@ export default function Navbar() {
           <div className="flex items-center space-x-6 ml-8">
             <button
               aria-label="Search"
-              className="text-gray-900 hover:text-gray-600"
+              className="text-white/90 hover:text-white"
             >
-              <Search className="h-4 w-4" />
+              <Search className="h-3.5 w-3.5" />
             </button>
             <button
               aria-label="Shopping Bag"
-              className="text-gray-900 hover:text-gray-600"
+              className="text-white/90 hover:text-white"
             >
-              <ShoppingBag className="h-4 w-4" />
+              <ShoppingBag className="h-3.5 w-3.5" />
             </button>
           </div>
         </div>
       </nav>
       {showShopDropdown && (
         <div
-          className="fixed top-12 left-0 w-full h-screen bg-black/20 z-40"
+          className="fixed top-11 left-0 w-full h-screen bg-black/40 z-40"
           onClick={() => setShowShopDropdown(false)}
         />
       )}

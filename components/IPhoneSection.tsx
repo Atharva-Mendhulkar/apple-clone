@@ -27,28 +27,36 @@ export default function IPhoneSection() {
   return (
     <section
       ref={ref}
-      className="h-[120vh] flex flex-col items-center justify-center bg-black text-white pt-24"
+      className="h-[400vh] flex flex-col items-center justify-start bg-black text-white pt-52"
     >
       <div
-        className={`space-y-0.5 text-center transform transition-all duration-1000 ${
+        className={`space-y-4 text-center transform transition-all duration-1000 ${
           inView ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
         }`}
       >
-        <h2 className="text-5xl md:text-6xl font-semibold">iPhone 15 Pro</h2>
-        <p className="text-xl md:text-2xl">
+        <h2 className="text-6xl md:text-7xl font-semibold tracking-tight">
+          iPhone 15 Pro
+        </h2>
+        <p className="text-2xl md:text-3xl font-medium">
           Titanium. So strong. So light. So Pro.
         </p>
-        <div className="flex items-center justify-center space-x-4 pt-1">
-          <Button variant="link" className="text-blue-500 hover:text-blue-400">
+        <div className="flex items-center justify-center space-x-6 pt-3">
+          <Button
+            variant="link"
+            className="text-blue-500 hover:text-blue-400 text-xl"
+          >
             Learn more &gt;
           </Button>
-          <Button variant="link" className="text-blue-500 hover:text-blue-400">
+          <Button
+            variant="link"
+            className="text-blue-500 hover:text-blue-400 text-xl"
+          >
             Buy &gt;
           </Button>
         </div>
       </div>
       <div
-        className={`-mt-4 w-full max-w-3xl mx-auto transform transition-all duration-1000 delay-300 ${
+        className={`-mt- w-full max-w-7xl mx-auto transform transition-all duration-1000 delay-300 ${
           inView ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
         }`}
       >
@@ -56,7 +64,7 @@ export default function IPhoneSection() {
           ref={imageRef}
           src="/download.png"
           alt="iPhone 15 Pro"
-          className="w-full h-auto will-change-transform"
+          className="w-full h-auto will-change-transform scale-150"
         />
       </div>
     </section>
