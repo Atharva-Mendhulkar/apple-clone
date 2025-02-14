@@ -27,7 +27,7 @@ export default function IPhoneSection() {
   return (
     <section
       ref={ref}
-      className="h-[400vh] flex flex-col items-center justify-start bg-black text-white pt-52"
+      className="h-[180vh] flex flex-col items-center justify-start bg-black text-white pt-20"
     >
       <div
         className={`space-y-4 text-center transform transition-all duration-1000 ${
