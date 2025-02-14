@@ -11,8 +11,8 @@ export default function Navbar() {
   return (
     <>
       <nav className="fixed top-0 w-full bg-[#1d1d1f] backdrop-blur-none z-50">
-        <div className="max-w-[980px] mx-auto h-11 flex items-center justify-between px-20 text-sm">
-          <Link href="/" className="text-white mr-8">
+        <div className="max-w-[1400px] mx-auto h-11 flex items-center justify-center px-8 text-sm">
+          <Link href="/" className="absolute left-8 text-white">
             <svg
               height="44"
               viewBox="0 0 14 44"
@@ -25,7 +25,7 @@ export default function Navbar() {
               />
             </svg>
           </Link>
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="flex items-center justify-center space-x-8">
             <div
               className="relative"
               onMouseEnter={() => setShowShopDropdown(true)}
@@ -79,7 +79,7 @@ export default function Navbar() {
               Support
             </Link>
           </div>
-          <div className="flex items-center space-x-6 ml-8">
+          <div className="absolute right-8 flex items-center space-x-6">
             <button
               aria-label="Search"
               className="text-white/90 hover:text-white"
