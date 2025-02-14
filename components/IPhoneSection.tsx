@@ -1,8 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { Button } from "@/components/ui/button";
+import { Canvas } from "@react-three/fiber";
+import { Environment, OrbitControls } from "@react-three/drei";
+import { IPhone3DModel } from "./IPhone3DModel";
+import { Suspense } from "react";
 
 export default function IPhoneSection() {
   const [ref, inView] = useInView({
@@ -10,27 +14,13 @@ export default function IPhoneSection() {
     threshold: 0.1,
   });
 
-  const imageRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (imageRef.current) {
-        const scrolled = window.scrollY;
-        imageRef.current.style.transform = `translateY(${scrolled * 0.1}px)`;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <section
       ref={ref}
-      className="h-[180vh] flex flex-col items-center justify-start bg-black text-white pt-32 overflow-hidden"
+      className="h-[150vh] flex flex-col items-center justify-start bg-black text-white pt-16 overflow-hidden"
     >
       <div
-        className={`space-y-6 text-center transform transition-all duration-1000 pt-20
+        className={`space-y-6 text-center transform transition-all duration-1000 pt-10
                    ${
                      inView
                        ? "translate-y-0 opacity-100"
@@ -70,21 +60,29 @@ export default function IPhoneSection() {
         </div>
       </div>
       <div
-        className={`w-full max-w-7xl mx-auto transform transition-all duration-1000 delay-300
+        className={`w-full min-w-[1800px] h-[2400px] max-w-none mx-auto transform transition-all duration-1000 delay-300
                    ${
                      inView
                        ? "translate-y-0 opacity-100"
                        : "translate-y-10 opacity-0"
                    }`}
       >
-        <img
-          ref={imageRef}
-          src="/download.png"
-          alt="iPhone 15 Pro"
-          className="w-full h-auto will-change-transform
-                     transition-all duration-500 ease-out
-                     hover:brightness-105 hover:scale-105"
-        />
+        <Canvas
+          camera={{ position: [0, 0, 1080], fov: 25 }}
+          style={{ width: "1800px", height: "100%" }}
+          className="mx-auto"
+        >
+          <Suspense fallback={null}>
+            <IPhone3DModel inView={inView} />
+            <Environment preset="studio" />
+            <OrbitControls
+              enableZoom={false}
+              enablePan={false}
+              minPolarAngle={Math.PI / 2}
+              maxPolarAngle={Math.PI / 2}
+            />
+          </Suspense>
+        </Canvas>
       </div>
     </section>
   );
