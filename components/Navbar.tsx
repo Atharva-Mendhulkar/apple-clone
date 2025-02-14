@@ -10,8 +10,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full bg-[rgba(22,22,23,0.8)] backdrop-blur-md z-50">
-        <div className="max-w-[980px] mx-auto h-11 flex items-center justify-between px-8 text-xs">
+      <nav className="fixed top-0 w-full bg-[#1d1d1f] backdrop-blur-none z-50">
+        <div className="max-w-[980px] mx-auto h-11 flex items-center justify-between px-20 text-sm">
           <Link href="/" className="text-white mr-8">
             <svg
               height="44"
@@ -97,7 +97,8 @@ export default function Navbar() {
       </nav>
       {showShopDropdown && (
         <div
-          className="fixed top-11 left-0 w-full h-screen bg-black/40 z-40"
+          className="fixed top-11 left-0 w-full h-screen bg-black/40 
+                     backdrop-blur-sm transition-opacity duration-300 z-40"
           onClick={() => setShowShopDropdown(false)}
         />
       )}
