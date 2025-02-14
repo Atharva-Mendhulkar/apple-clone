@@ -1,18 +1,29 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { Button } from "@/components/ui/button";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { IPhone3DModel } from "./IPhone3DModel";
 import { Suspense } from "react";
+import ErrorBoundary from "./ErrorBoundary";
 
 export default function IPhoneSection() {
   const [ref, inView] = useInView({
     triggerOnce: false,
     threshold: 0.1,
   });
+  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  if (hasError) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="text-red-500 text-xl">Error loading 3D Model</div>
+      </div>
+    );
+  }
 
   return (
     <section
@@ -59,30 +70,42 @@ export default function IPhoneSection() {
           </Button>
         </div>
       </div>
-      <div
-        className={`w-full min-w-[1800px] h-[2400px] max-w-none mx-auto transform transition-all duration-1000 delay-300
-                   ${
-                     inView
-                       ? "translate-y-0 opacity-100"
-                       : "translate-y-10 opacity-0"
-                   }`}
-      >
-        <Canvas
-          camera={{ position: [0, 0, 1080], fov: 25 }}
-          style={{ width: "1800px", height: "100%" }}
-          className="mx-auto"
-        >
-          <Suspense fallback={null}>
-            <IPhone3DModel inView={inView} />
-            <Environment preset="studio" />
-            <OrbitControls
-              enableZoom={false}
-              enablePan={false}
-              minPolarAngle={Math.PI / 2}
-              maxPolarAngle={Math.PI / 2}
-            />
-          </Suspense>
-        </Canvas>
+      <div className="relative w-full h-[1200px]">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-white text-xl">Loading 3D Model...</div>
+          </div>
+        )}
+
+        <ErrorBoundary>
+          <Canvas
+            camera={{ position: [0, 0, 5], fov: 45 }}
+            style={{ width: "100%", height: "100%" }}
+            className="mx-auto"
+          >
+            <Suspense
+              fallback={
+                <mesh>
+                  <boxGeometry args={[1, 1, 1]} />
+                  <meshStandardMaterial color="gray" wireframe />
+                </mesh>
+              }
+            >
+              <IPhone3DModel
+                inView={inView}
+                onError={() => setHasError(true)}
+                onLoad={() => setIsLoading(false)}
+              />
+              <Environment preset="studio" />
+              <OrbitControls
+                enableZoom={false}
+                enablePan={false}
+                minPolarAngle={Math.PI / 2}
+                maxPolarAngle={Math.PI / 2}
+              />
+            </Suspense>
+          </Canvas>
+        </ErrorBoundary>
       </div>
     </section>
   );

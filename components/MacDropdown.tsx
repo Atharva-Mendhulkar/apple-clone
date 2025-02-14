@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { shopMenuData } from "@/data/menuData";
+import { macMenuData } from "@/data/menuData";
 
-const ShopDropdown = () => {
+const MacDropdown = () => {
   return (
     <div
-      className="fixed left-0 top-[44px] w-full h-[45vh] min-h-[400px] 
+      className="fixed left-0 top-[44px] w-full h-[45vh] min-h-[500px] 
                  bg-[#1d1d1f] shadow-2xl z-50
                  animate-in fade-in duration-500 ease-in-out
                  transition-all transform-gpu"
@@ -13,21 +13,10 @@ const ShopDropdown = () => {
         animation: "slideDown 0.5s ease-in-out forwards",
       }}
     >
-      <div className="w-full border-b border-white/10">
-        <div className="max-w-[1400px] mx-auto py-4 px-8">
-          <input
-            type="text"
-            placeholder="Search apple.com"
-            className="w-full max-w-[680px] mx-auto block bg-[#1d1d1f]/80 text-[16px] text-white rounded-lg 
-                     px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-white/20
-                     placeholder:text-white/60"
-          />
-        </div>
-      </div>
       <div className="w-full">
         <div className="max-w-[1400px] mx-auto px-8 py-10">
           <div className="grid grid-cols-3 gap-20">
-            {shopMenuData.map((section) => (
+            {macMenuData.map((section) => (
               <div key={section.title} className="space-y-6">
                 <h3 className="text-[12px] text-white/60 font-semibold tracking-wider uppercase">
                   {section.title}
@@ -59,4 +48,4 @@ const ShopDropdown = () => {
   );
 };
 
-export default ShopDropdown;
+export default MacDropdown;

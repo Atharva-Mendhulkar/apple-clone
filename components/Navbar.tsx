@@ -4,9 +4,11 @@ import Link from "next/link";
 import { Search, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import ShopDropdown from "./ShopDropdown";
+import MacDropdown from "./MacDropdown";
 
 export default function Navbar() {
   const [showShopDropdown, setShowShopDropdown] = useState(false);
+  const [showMacDropdown, setShowMacDropdown] = useState(false);
 
   return (
     <>
@@ -36,9 +38,16 @@ export default function Navbar() {
               </Link>
               {showShopDropdown && <ShopDropdown />}
             </div>
-            <Link href="/mac" className="text-white/90 hover:text-white">
-              Mac
-            </Link>
+            <div
+              className="relative"
+              onMouseEnter={() => setShowMacDropdown(true)}
+              onMouseLeave={() => setShowMacDropdown(false)}
+            >
+              <Link href="/mac" className="text-white/90 hover:text-white">
+                Mac
+              </Link>
+              {showMacDropdown && <MacDropdown />}
+            </div>
             <Link href="/ipad" className="text-white/90 hover:text-white">
               iPad
             </Link>
@@ -95,11 +104,14 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      {showShopDropdown && (
+      {(showShopDropdown || showMacDropdown) && (
         <div
           className="fixed top-11 left-0 w-full h-screen bg-black/40 
                      backdrop-blur-sm transition-opacity duration-300 z-40"
-          onClick={() => setShowShopDropdown(false)}
+          onClick={() => {
+            setShowShopDropdown(false);
+            setShowMacDropdown(false);
+          }}
         />
       )}
     </>

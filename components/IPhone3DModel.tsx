@@ -17,44 +17,68 @@ type GLTFResult = GLTF & {
   };
 };
 
-export function IPhone3DModel({ inView }: { inView: boolean }) {
+export function IPhone3DModel({
+  inView,
+  onError,
+  onLoad,
+}: {
+  inView: boolean;
+  onError: () => void;
+  onLoad: () => void;
+}) {
   const group = useRef<THREE.Group>(null);
   const [modelError, setModelError] = useState(false);
 
+  // Fix the model path to match the actual file location
   const { scene, nodes, materials } = useGLTF(
-    "/models/iphone/apple_iphone_15_pro_max_black(2).glb"
+    "/models/iphone/iphone-15-pro.glb"
   ) as GLTFResult;
 
+  // Add error logging for debugging
   useEffect(() => {
     if (!scene) {
+      console.error("Failed to load scene");
       setModelError(true);
+      onError();
       return;
     }
 
     try {
       Object.values(materials).forEach((material: THREE.Material) => {
         if ((material as any).map) {
-          (material as any).map.path =
+          const texturePath =
             "/models/iphone/textures/" + (material as any).map.name;
+          console.log("Loading texture:", texturePath);
+          (material as any).map.path = texturePath;
         }
       });
+      onLoad(); // Call onLoad when the model is ready
     } catch (error) {
       console.error("Error setting up materials:", error);
       setModelError(true);
+      onError();
     }
-  }, [materials, scene]);
+  }, [materials, scene, onError, onLoad]);
 
   useFrame((state) => {
     if (group.current && inView) {
-      // Add constant rotation
-      group.current.rotation.y += 0.002;
+      // Smooth continuous rotation
+      group.current.rotation.y += 0.005;
 
-      // Add subtle oscillation on top of constant rotation
-      const oscillation = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
-      group.current.rotation.y = THREE.MathUtils.lerp(
-        group.current.rotation.y,
-        group.current.rotation.y + oscillation,
-        0.05
+      // Add floating up/down motion
+      const floatingY = Math.sin(state.clock.elapsedTime) * 0.1;
+      group.current.position.y = floatingY;
+
+      // Add gentle tilting
+      const tilt = Math.sin(state.clock.elapsedTime * 0.5) * 0.05;
+      group.current.rotation.x = tilt;
+
+      // Smooth transitions
+      group.current.position.lerp(new THREE.Vector3(0, floatingY, 0), 0.1);
+      group.current.rotation.z = THREE.MathUtils.lerp(
+        group.current.rotation.z,
+        tilt * 0.5,
+        0.1
       );
     }
   });
@@ -69,11 +93,11 @@ export function IPhone3DModel({ inView }: { inView: boolean }) {
   }
 
   return (
-    <group ref={group} dispose={null} position={[0, 4, 0]} scale={792}>
+    <group ref={group} dispose={null} position={[0, 0, 0]} scale={21}>
       <primitive object={scene} />
     </group>
   );
 }
 
-// Pre-load the model
-useGLTF.preload("/models/iphone/apple_iphone_15_pro_max_black(2).glb");
+// Fix the preload path to use forward slashes
+useGLTF.preload("/models/iphone/iphone-15-pro.glb");
