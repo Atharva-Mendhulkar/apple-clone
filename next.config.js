@@ -1,24 +1,30 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     unoptimized: true,
   },
+  output: 'standalone',
   webpack: (config) => {
+    config.resolve.alias.three = path.resolve(__dirname, './node_modules/three');
     config.module.rules.push({
       test: /\.(glb|gltf)$/,
-      use: {
-        loader: 'file-loader',
-        options: {
-          publicPath: '/_next/static/media',
-          outputPath: 'static/media',
-          name: '[name].[hash].[ext]',
-        },
-      },
+      type: 'asset/resource',
+      generator: {
+        filename: 'static/models/[hash][ext]'
+      }
     });
     return config;
   },
-  // Ensure static files are handled correctly
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/_next' : ''
+  experimental: {
+    webpackBuildWorker: true,
+    parallelServerBuildTraces: true,
+    parallelServerCompiles: true,
+  }
 }
 
 export default nextConfig;

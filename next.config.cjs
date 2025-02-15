@@ -1,5 +1,1 @@
-
-
-
-
-}  // ...existing code...module.exports = {/** @type {import('next').NextConfig} */
+// ...existing code...module.exports = {/** @type {import('next').NextConfig} */

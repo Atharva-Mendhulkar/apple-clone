@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
@@ -27,38 +27,31 @@ export function IPhone3DModel({
   onLoad: () => void;
 }) {
   const group = useRef<THREE.Group>(null);
-  const [modelError, setModelError] = useState(false);
+  const [modelLoaded, setModelLoaded] = useState(false);
 
-  // Fix the model path to match the actual file location
-  const { scene, nodes, materials } = useGLTF(
-    "/models/iphone/iphone-15-pro.glb"
+  const { scene, materials } = useGLTF(
+    "/models/iphone/iphone-15-pro.glb",
+    true, // Add draco decoder
+    true // Add KTX2 loader
   ) as GLTFResult;
 
-  // Add error logging for debugging
   useEffect(() => {
-    if (!scene) {
-      console.error("Failed to load scene");
-      setModelError(true);
-      onError();
-      return;
+    if (scene) {
+      try {
+        scene.traverse((child) => {
+          if (child instanceof THREE.Mesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
+        setModelLoaded(true);
+        onLoad();
+      } catch (error) {
+        console.error("Error setting up model:", error);
+        onError();
+      }
     }
-
-    try {
-      Object.values(materials).forEach((material: THREE.Material) => {
-        if ((material as any).map) {
-          const texturePath =
-            "/models/iphone/textures/" + (material as any).map.name;
-          console.log("Loading texture:", texturePath);
-          (material as any).map.path = texturePath;
-        }
-      });
-      onLoad(); // Call onLoad when the model is ready
-    } catch (error) {
-      console.error("Error setting up materials:", error);
-      setModelError(true);
-      onError();
-    }
-  }, [materials, scene, onError, onLoad]);
+  }, [scene, onLoad, onError]);
 
   useFrame((state) => {
     if (group.current && inView) {
@@ -83,21 +76,22 @@ export function IPhone3DModel({
     }
   });
 
-  if (modelError) {
-    return (
-      <mesh>
-        <boxGeometry args={[1, 2, 0.1]} />
-        <meshStandardMaterial color="gray" />
-      </mesh>
-    );
+  if (!modelLoaded) {
+    return null;
   }
 
   return (
-    <group ref={group} dispose={null} position={[0, 0, 0]} scale={21}>
-      <primitive object={scene} />
-    </group>
+    <Suspense fallback={null}>
+      <group ref={group} dispose={null} position={[0, 0, 0]} scale={21}>
+        <primitive object={scene} />
+      </group>
+    </Suspense>
   );
 }
 
-// Fix the preload path to use forward slashes
-useGLTF.preload("/models/iphone/iphone-15-pro.glb");
+// Preload with error handling
+try {
+  useGLTF.preload("/models/iphone/iphone-15-pro.glb");
+} catch (error) {
+  console.error("Error preloading model:", error);
+}
